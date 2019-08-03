@@ -1,11 +1,10 @@
 import json
-import datetime
 from collections import defaultdict
 
 from sklearn.preprocessing import LabelEncoder
-from sklearn.feature_extraction import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-INPUT_FILE = '~/Data/arxiv_subject_classification/train.json'
+#INPUT_FILE = '~/Data/arxiv_subject_classification/train.json'
 TRAIN_DATA = json.load(open(INPUT_FILE))
 
 
