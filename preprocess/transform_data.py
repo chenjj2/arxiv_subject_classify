@@ -1,14 +1,10 @@
-import json
 from collections import defaultdict
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-#INPUT_FILE = '~/Data/arxiv_subject_classification/train.json'
-TRAIN_DATA = json.load(open(INPUT_FILE))
 
-
-def encode_subject(train_data=TRAIN_DATA):
+def encode_subject(train_data):
     subjects = [d['subject'] for d in train_data]
     le = LabelEncoder()
     le.fit(subjects)
@@ -16,7 +12,7 @@ def encode_subject(train_data=TRAIN_DATA):
     return encoded_subjects
 
 
-def encode_date(train_data=TRAIN_DATA, resolution='day'):
+def encode_date(train_data, resolution='day'):
     if resolution == 'day':
         dates = [d['date'][:10] for d in train_data]
     elif resolution == 'month':
@@ -33,7 +29,7 @@ def encode_date(train_data=TRAIN_DATA, resolution='day'):
     return encoded_dates
 
 
-def combine_corpus(train_data=TRAIN_DATA):
+def combine_corpus(train_data):
     """ return title/abstract corpus for each subject.
     corpus = {"subject": concatenated string}
     """
