@@ -18,8 +18,8 @@ def filter_data(df):
     return df
 
 
-def split_data(df):
-    train, test = train_test_split(df, test_size=0.10, random_state=0, stratify=None)
+def split_data(df, test_size=0.1):
+    train, test = train_test_split(df, test_size=test_size, random_state=0, stratify=None)
     return train, test
 
 

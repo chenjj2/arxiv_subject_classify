@@ -6,11 +6,11 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
-from preprocess.split_data import get_split_data
+from preprocess.split_data import get_split_data, split_data
 from linear_models import METHODS
 
 NLP = spacy.load('en_core_web_sm')
-SPACY_VECTOR_DIM = 300
+SPACY_VECTOR_DIM = 96
 LE = LabelEncoder()
 PATH = '/Users/jingjing/Data/arxiv_subject_classification/word_vector_sample/'
 
@@ -18,6 +18,9 @@ PATH = '/Users/jingjing/Data/arxiv_subject_classification/word_vector_sample/'
 def get_vector(path=PATH):
     print("Get Vector")
     df_train, df_test = get_split_data()
+
+    print("Use Sub Sample")
+    df_train, df_test = split_data(df_test, test_size=0.2)
 
     X_train = []
     for i, row in df_train.iterrows():
@@ -52,8 +55,14 @@ def main(X_train, y_train, X_test, y_test):
 
 
 if __name__ == '__main__':
-    get_vector()
-
+    #get_vector()
+    '''
+    SVC: 0.31
+    Tree: 0.13
+    MLP: 0.24
+    LR: 0.34
+    SGD: 0.26
+    '''
     X_train, y_train, X_test, y_test = np.load(PATH + 'X_train.npy'), np.load(PATH + 'y_train.npy'), \
                                        np.load(PATH + 'X_test.npy'), np.load(PATH + 'y_test.npy')
 
