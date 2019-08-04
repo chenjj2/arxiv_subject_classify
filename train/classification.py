@@ -3,9 +3,8 @@ sys.path.append("../")
 
 import numpy as np
 from collections import defaultdict
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-from sklearn.linear_model import LogisticRegressionCV
-from sklearn.metrics import accuracy_score
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 from preprocess.split_data import get_split_data, split_data
 
@@ -79,18 +78,5 @@ def save_xy(path=PATH):
     np.save(path + 'y_test.npy', y_test)
 
 
-def main(X_train, y_train, X_test, y_test):
-    print("Train")
-    LRCV = LogisticRegressionCV()
-    LRCV.fit(X_train, y_train)
-    y_pred = LRCV.predict(X_test)
-    print(f"Accuracy {accuracy_score(y_test, y_pred)}")
-
-
 if __name__ == '__main__':
     save_xy()
-
-    main(np.load(PATH+'X_train.npy'),
-         np.load(PATH+'y_train.npy'),
-         np.load(PATH+'X_test.npy'),
-         np.load(PATH+'y_test.npy'))
