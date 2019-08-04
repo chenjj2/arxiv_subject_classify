@@ -29,3 +29,8 @@ For ngram_range = (1, 2), we tested on the following max_features:
 Check `train/linear_models.py`
 
 Best Performance: `MLPClassifier Accuracy 0.572562358276644`
+
+#### 3. Vectorize with Spacy
+Check `train/word_vectors.py` and `train/word_vector_with_filter.py`.
+
+Performance not as good. Between `0.2 to 0.4`.
