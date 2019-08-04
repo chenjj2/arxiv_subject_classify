@@ -50,10 +50,12 @@ class MultinomNaiveBayes:
 
 if __name__ == '__main__':
     df_train, df_test = get_split_data('../data/train.json')
-    model = MultinomNaiveBayes()
-    model.fit(df_train)
-    y_pred = model.predict(df_test)
 
-    y_test = df_test.subject
-    score = accuracy_score(y_test, y_pred)
-    print(score)
+    for max_features in [500, 1000, 2000, 5000]:
+        model = MultinomNaiveBayes(max_features=max_features)
+        model.fit(df_train)
+        y_pred = model.predict(df_test)
+
+        y_test = df_test.subject
+        score = accuracy_score(y_test, y_pred)
+        print(max_features, score)
