@@ -3,16 +3,22 @@ sys.path.append("../")
 
 import spacy
 import numpy as np
+
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
 from preprocess.split_data import get_split_data, split_data
 from linear_models import METHODS
 
-NLP = spacy.load('en_core_web_sm')
-SPACY_VECTOR_DIM = 96
+# NOTE: spacy vector simple adds each words vector, so word order is ignored
+#NLP = spacy.load('en_core_web_sm')
+#SPACY_VECTOR_DIM = 96
+NLP = spacy.load("en_core_web_md")
+SPACY_VECTOR_DIM = 300
+
 LE = LabelEncoder()
-PATH = '/Users/jingjing/Data/arxiv_subject_classification/word_vector_sample/'
+
+PATH = '/Users/jingjing/Data/arxiv_subject_classification/word_vector_sample_md/'
 
 
 def get_vector(path=PATH):
@@ -55,14 +61,23 @@ def main(X_train, y_train, X_test, y_test):
 
 
 if __name__ == '__main__':
-    #get_vector()
     '''
+    en_core_web_sm
     SVC: 0.31
     Tree: 0.13
     MLP: 0.24
     LR: 0.34
     SGD: 0.26
+    
+    en_core_web_md
+    SCV: 0.34
+    Tree: 0.21 
+    MLP: 0.39
+    LR: 0.50
+    SGD: 0.46
     '''
+    get_vector()
+
     X_train, y_train, X_test, y_test = np.load(PATH + 'X_train.npy'), np.load(PATH + 'y_train.npy'), \
                                        np.load(PATH + 'X_test.npy'), np.load(PATH + 'y_test.npy')
 
