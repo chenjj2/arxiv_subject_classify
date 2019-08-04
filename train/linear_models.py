@@ -8,24 +8,22 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score
 
-PATH = '/Users/jingjing/Data/arxiv_subject_classification/sub_train/'
-X_TRAIN, Y_TRAIN, X_TEST, Y_TEST = np.load(PATH+'X_train.npy'), np.load(PATH+'y_train.npy'),\
-                                   np.load(PATH+'X_test.npy'), np.load(PATH+'y_test.npy')
-
+PATH = '/Users/jingjing/Data/arxiv_subject_classification/tfidf_sub_sample/'
 METHODS = {"SVC": SVC(),
            "Tree":DecisionTreeClassifier(),
            "MLP":MLPClassifier(max_iter=500),
            "LR": LogisticRegression(),
            "SGD": SGDClassifier()}
 
-def main(X_train=X_TRAIN, y_train=Y_TRAIN, X_test=X_TEST, y_test=Y_TEST):
-    '''
+
+def main(X_train, y_train, X_test, y_test):
+
     for name, model in METHODS.items():
         print(name)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         print(f"Accuracy {accuracy_score(y_test, y_pred)}")
-    '''
+
     model = OneVsRestClassifier(METHODS['MLP'], n_jobs=-1)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
@@ -41,4 +39,6 @@ if __name__ == '__main__':
     SGD Accuracy 0.5340136054421769
     OVR-MLP(max_iter=500) Accuracy 0.5544217687074829
     """
-    main()
+    X_train, y_train, X_test, y_test = np.load(PATH + 'X_train.npy'), np.load(PATH + 'y_train.npy'), \
+                                       np.load(PATH + 'X_test.npy'), np.load(PATH + 'y_test.npy')
+    main(X_train, y_train, X_test, y_test)
