@@ -24,3 +24,8 @@ For ngram_range = (1, 2), we tested on the following max_features:
 | 1000 | 49.64 |
 | 2000 | 51.63 |
 | 5000 | 54.51 |
+
+#### 2. Pre-Train TFIDF of each Subject and Classify
+Check `train/linear_models.py`
+
+Best Performance: `MLPClassifier Accuracy 0.572562358276644`
