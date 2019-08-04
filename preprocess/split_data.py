@@ -23,9 +23,9 @@ def split_data(df, test_size=0.1):
     return train, test
 
 
-def get_split_data(file=INPUT_FILE):
+def get_split_data(file=INPUT_FILE, test_size=0.1):
     df = filter_data(read_data(file))
-    train, test = split_data(df)
+    train, test = split_data(df, test_size=test_size)
     return train, test
 
 
