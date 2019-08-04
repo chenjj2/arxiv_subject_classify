@@ -2,7 +2,7 @@ import json
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-INPUT_FILE = '~/Data/arxiv_subject_classification/train.json'
+INPUT_FILE = '/Users/jingjing/Data/arxiv_subject_classification/train.json'
 # INPUT_FILE = '../data/train.json'
 
 
