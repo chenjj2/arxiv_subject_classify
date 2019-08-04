@@ -44,7 +44,7 @@ def transform_x(df, title_vectorizer, abstract_vectorizer, title_words, abstract
         xi = np.hstack([NLP(title_reform).vector, NLP(abstract_reform).vector])
         X.append(xi)
 
-    return X
+    return np.array(X).reshape(len(df), SPACY_VECTOR_DIM*2)
 
 
 def get_vector(path=PATH):
