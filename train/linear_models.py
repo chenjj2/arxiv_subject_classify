@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression, SGDClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score

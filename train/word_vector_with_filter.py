@@ -59,17 +59,25 @@ def transform_x(df, title_vectorizer, abstract_vectorizer, title_words, abstract
             print(title_reform)
             print(abstract_reform)
             to_print -= 1
+
         # spacy word2vec encode sentence
-        xi = np.hstack([NLP(title_reform).vector, NLP(abstract_reform).vector])
+        tw2v = NLP(title_reform)
+        aw2v = NLP(abstract_reform)
+        xi = np.hstack([tw2v.vector, aw2v.vector])
+        #xi = np.hstack([tw2v.vector/tw2v.vector_norm, aw2v.vector/aw2v.vector_norm])
         X.append(xi)
 
     X = np.stack(X, axis=0)
     return X.reshape(len(df), SPACY_VECTOR_DIM*2)
 
 
-def get_vector(path=PATH):
+def get_vector(path=PATH, testing=True):
     print("Read Data")
-    df_train, df_test = get_split_data(test_size=0.1)
+    if testing:
+        test_size = 0.001
+    else:
+        test_size = 0.1
+    df_train, df_test = get_split_data(test_size=test_size)
     print("Use Sub Sample")
     df_train, df_test = split_data(df_test, test_size=0.2)
 
@@ -90,11 +98,14 @@ def get_vector(path=PATH):
     y_train = LE.transform(df_train['subject'])
     y_test = LE.transform(df_test['subject'])
 
-    print("Save to File")
-    np.save(path + 'X_train.npy', X_train)
-    np.save(path + 'y_train.npy', y_train)
-    np.save(path + 'X_test.npy', X_test)
-    np.save(path + 'y_test.npy', y_test)
+    if not testing:
+        print("Save to File")
+        np.save(path + 'X_train.npy', X_train)
+        np.save(path + 'y_train.npy', y_train)
+        np.save(path + 'X_test.npy', X_test)
+        np.save(path + 'y_test.npy', y_test)
+
+    return X_train, y_train, X_test, y_test
 
 
 def main(X_train, y_train, X_test, y_test):
@@ -116,11 +127,10 @@ if __name__ == '__main__':
     SGD: 0.22
     '''
     #get_vector()
+    #X_train, y_train, X_test, y_test = np.load(PATH + 'X_train.npy'), np.load(PATH + 'y_train.npy'), \
+    #                                   np.load(PATH + 'X_test.npy'), np.load(PATH + 'y_test.npy')
 
-    X_train, y_train, X_test, y_test = np.load(PATH + 'X_train.npy'), np.load(PATH + 'y_train.npy'), \
-                                       np.load(PATH + 'X_test.npy'), np.load(PATH + 'y_test.npy')
+    X_train, y_train, X_test, y_test = get_vector(testing=True)
 
     main(X_train, y_train, X_test, y_test)
-
-
 
