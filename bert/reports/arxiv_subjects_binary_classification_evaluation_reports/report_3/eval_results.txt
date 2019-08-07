@@ -1,0 +1,7 @@
+task = arxiv_subjects_binary_classification
+mcc = 0.0
+tp = 0
+tn = 236
+fp = 0
+fn = 237
+eval_loss = 0.6950758437315623

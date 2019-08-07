@@ -37,6 +37,7 @@ optimizer_grouped_parameters = [
 
 num_train_optimization_steps = int(
     train_examples_len / TRAIN_BATCH_SIZE / GRADIENT_ACCUMULATION_STEPS) * NUM_TRAIN_EPOCHS
+#num_train_optimization_steps = 1
 optimizer = BertAdam(optimizer_grouped_parameters,
                      lr=LEARNING_RATE,
                      warmup=WARMUP_PROPORTION,
@@ -105,9 +106,16 @@ for _ in trange(int(NUM_TRAIN_EPOCHS), desc="Epoch"):
 model_to_save = model.module if hasattr(model, 'module') else model  # Only save the model it-self
 
 # If we save using the predefined names, we can load using `from_pretrained`
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
+
 output_model_file = os.path.join(OUTPUT_DIR, WEIGHTS_NAME)
 output_config_file = os.path.join(OUTPUT_DIR, CONFIG_NAME)
 
 torch.save(model_to_save.state_dict(), output_model_file)
 model_to_save.config.to_json_file(output_config_file)
+
+
+# Load pre-trained model tokenizer (vocabulary)
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased', do_lower_case=False)
 tokenizer.save_vocabulary(OUTPUT_DIR)

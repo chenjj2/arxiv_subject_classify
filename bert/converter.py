@@ -28,6 +28,9 @@ TASK_NAME = 'arxiv_subjects_binary_classification'
 # The output directory where the model predictions and checkpoints will be written.
 OUTPUT_DIR = f'outputs/{TASK_NAME}/'
 
+# The directory where the evaluation reports will be written to.
+REPORTS_DIR = f'reports/{TASK_NAME}_evaluation_reports/'
+
 CACHE_DIR = 'cache/'
 
 # The maximum total input sequence length after WordPiece tokenization.
